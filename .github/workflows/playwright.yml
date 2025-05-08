@@ -18,42 +18,37 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Install dependencies
+      - name: Instalar dependências
         run: npm ci
 
-      - name: Install Playwright Browsers
+      - name: Instalar navegadores do Playwright
         run: npx playwright install --with-deps
+
+      - name: Criar arquivo .env
+        run: |
+          echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> .env
+          echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> .env
+          echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> .env
+          echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "DATABASE_CLIENT=sqlite" >> .env
+          echo "DATABASE_FILENAME=.tmp/data.db" >> .env
+          echo "HOST=0.0.0.0" >> .env
+          echo "PORT=1337" >> .env
 
       - name: Build Strapi
         run: npm run build
-        env:
-          HOST: 0.0.0.0
-          PORT: 1337
-          APP_KEYS: ${{ secrets.APP_KEYS }}
-          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
-          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
-          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
-          DATABASE_CLIENT: sqlite
-          DATABASE_FILENAME: .tmp/data.db
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
-      - name: Start server
+      - name: Iniciar servidor
         run: npm run start &
         env:
           HOST: 0.0.0.0
           PORT: 1337
-          APP_KEYS: ${{ secrets.APP_KEYS }}
-          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
-          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
-          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
-          DATABASE_CLIENT: sqlite
-          DATABASE_FILENAME: .tmp/data.db
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
-      - name: Wait for server
+      - name: Aguardar servidor
         run: npx wait-on http://localhost:1337
 
-      - name: Run Playwright tests
+      - name: Executar testes do Playwright
         run: npx playwright test
 
       - uses: actions/upload-artifact@v4
