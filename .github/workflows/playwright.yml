@@ -26,14 +26,14 @@ jobs:
 
       - name: Criar arquivo .env
         run: |
-          echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> .env
-          echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> .env
-          echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> .env
-          echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
-          echo "DATABASE_CLIENT=sqlite" >> .env
-          echo "DATABASE_FILENAME=.tmp/data.db" >> .env
-          echo "HOST=0.0.0.0" >> .env
+          echo "APP_KEYS=${{ secrets.APP_KEYS }}" >> .env || 
+          echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}" >> .env || 
+          echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}" >> .env || 
+          echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}" >> .env || 
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env || 
+          echo "DATABASE_CLIENT=sqlite" >> .env || 
+          echo "DATABASE_FILENAME=.tmp/data.db" >> .env || 
+          echo "HOST=0.0.0.0" >> .env || 
           echo "PORT=1337" >> .env
 
       - name: Build Strapi
