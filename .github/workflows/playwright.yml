@@ -27,15 +27,15 @@ jobs:
       - name: Criar arquivo .env
         uses: SpicyPizza/create-envfile@v2.0
         with:
-          envkey_APP_KEYS: ${{ secrets.APP_KEYS }}
-          envkey_API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
-          envkey_ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
-          envkey_TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
-          envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          envkey_DATABASE_CLIENT: sqlite
-          envkey_DATABASE_FILENAME: .tmp/data.db
-          envkey_HOST: 0.0.0.0
-          envkey_PORT: 1337
+          APP_KEYS: ${{ secrets.APP_KEYS }}
+          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
+          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          DATABASE_CLIENT: sqlite
+          DATABASE_FILENAME: .tmp/data.db
+          HOST: 0.0.0.0
+          PORT: 1337
           file_name: .env
           directory: .
 
