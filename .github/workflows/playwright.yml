@@ -25,19 +25,17 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Criar arquivo .env
-        uses: SpicyPizza/create-envfile@v2.0
-        with:
-          APP_KEYS: ${{ secrets.APP_KEYS }}
-          API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
-          ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
-          TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          DATABASE_CLIENT: sqlite
-          DATABASE_FILENAME: .tmp/data.db
-          HOST: 0.0.0.0
-          PORT: 1337
-          file_name: .env
-          directory: .
+        run: |
+            echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}"  >> .env
+            echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}"      >> .env
+            echo "APP_KEYS=${{ secrets.APP_KEYS }}"                  >> .env
+            echo "DATABASE_CLIENT=${{ secrets.DATABASE_CLIENT }}"    >> .env
+            echo "DATABASE_FILENAME=${{ secrets.DATABASE_FILENAME }}">> .env
+            echo "DATABASE_SSL=${{ secrets.DATABASE_SSL }}">> .env
+            echo "HOST=${{ secrets.HOST }}">> .env
+            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}"  >> .env
+            echo "PORT=${{ secrets.PORT }}">> .env
+            echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}"  >> .env
 
       - name: Build Strapi
         run: npm run build
