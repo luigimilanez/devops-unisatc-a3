@@ -37,14 +37,14 @@ jobs:
             echo "PORT=${{ secrets.PORT }}">> .env
             echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}"  >> .env
 
-      - name: Build Strapi
-        run: npm run build
+      - name: Run Dev Strapi
+        run: npm run dev
 
-      - name: Iniciar servidor
-        run: npm run start &
-        env:
-          HOST: 0.0.0.0
-          PORT: 1337
+      #- name: Iniciar servidor
+      #  run: npm run start &
+      #  env:
+      #    HOST: 0.0.0.0
+      #    PORT: 1337
 
       - name: Aguardar servidor
         run: npx wait-on http://localhost:1337
