@@ -26,16 +26,16 @@ jobs:
 
       - name: Criar arquivo .env
         run: |
-            echo "ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}"  >> .env
-            echo "API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}"      >> .env
-            echo "APP_KEYS=${{ secrets.APP_KEYS }}"                  >> .env
-            echo "DATABASE_CLIENT=${{ secrets.DATABASE_CLIENT }}"    >> .env
-            echo "DATABASE_FILENAME=${{ secrets.DATABASE_FILENAME }}">> .env
-            echo "DATABASE_SSL=${{ secrets.DATABASE_SSL }}">> .env
-            echo "HOST=${{ secrets.HOST }}">> .env
-            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}"  >> .env
-            echo "PORT=${{ secrets.PORT }}">> .env
-            echo "TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}"  >> .env
+            echo "ADMIN_JWT_SECRET=${{ vars.ADMIN_JWT_SECRET }}"  >> .env
+            echo "API_TOKEN_SALT=${{ vars.API_TOKEN_SALT }}"      >> .env
+            echo "APP_KEYS=${{ vars.APP_KEYS }}"                  >> .env
+            echo "DATABASE_CLIENT=${{ vars.DATABASE_CLIENT }}"    >> .env
+            echo "DATABASE_FILENAME=${{ vars.DATABASE_FILENAME }}">> .env
+            echo "DATABASE_SSL=${{ vars.DATABASE_SSL }}">> .env
+            echo "HOST=${{ vars.HOST }}">> .env
+            echo "JWT_SECRET=${{ vars.JWT_SECRET }}"  >> .env
+            echo "PORT=${{ vars.PORT }}">> .env
+            echo "TRANSFER_TOKEN_SALT=${{ vars.TRANSFER_TOKEN_SALT }}"  >> .env
 
       - name: Run Dev Strapi
         run: npm run dev
