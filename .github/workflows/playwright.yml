@@ -37,24 +37,21 @@ jobs:
             echo "PORT=${{ vars.PORT }}">> .env
             echo "TRANSFER_TOKEN_SALT=${{ vars.TRANSFER_TOKEN_SALT }}"  >> .env
 
-      - name: Run Dev Strapi
-        run: npm run dev
+        - name: Run Strapi + Playwright
+        run: |
+        # 1) sobe o Strapi em background
+        npm run dev &
 
-      #- name: Iniciar servidor
-      #  run: npm run start &
-      #  env:
-      #    HOST: 0.0.0.0
-      #    PORT: 1337
+        # 2) espera 5s (ou melhor: aguarda porta liberada)
+        sleep 5
+        # ou: npx wait-on http://localhost:1337 --timeout 60000
+    
+        # 3) executa os testes enquanto o Strapi ainda tá rodando
+        npx playwright test
 
-      - name: Aguardar servidor
-        run: npx wait-on http://localhost:1337
-
-      - name: Executar testes do Playwright
-        run: npx playwright test
-
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+        #   - uses: actions/upload-artifact@v4
+        #     if: ${{ !cancelled() }}
+        #     with:
+        #       name: playwright-report
+        #       path: playwright-report/
+        #       retention-days: 30
