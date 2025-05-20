@@ -5,6 +5,7 @@ test('Realizando login como Editor e criando author', async ({ page }) => {
     
     // Acessar a página de login
     await page.goto('http://localhost:1337/admin');
+    await page.reload();
 
     // Logando na conta
     await page.fill('input[name="email"]', 'editor@satc.edu.br');
