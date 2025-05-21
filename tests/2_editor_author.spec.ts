@@ -1,11 +1,28 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+
+// Função segura para acessar uma URL com retry (evita falhas de conexão temporárias)
+async function safeGoto(page: Page, url: string, retries = 5, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            await page.goto(url);
+            return;
+        } catch (e) {
+            if (e.message.includes('ECONNREFUSED')) {
+                console.log(`Tentativa ${i + 1} falhou com ECONNREFUSED. Tentando novamente em ${delay}ms...`);
+                await page.waitForTimeout(delay);
+            } else {
+                throw e; // erro não relacionado a conexão, rethrow
+            }
+        }
+    }
+    throw new Error(`Falha ao acessar ${url} após ${retries} tentativas`);
+}
 
 test('Realizando login como Editor e criando author', async ({ page }) => {
     
     // Acessar a página de login
-    await page.goto('http://localhost:1337/admin');
-    await page.reload();
+    await safeGoto(page, 'http://localhost:1337/admin');
 
     // Logando na conta
     await page.fill('input[name="email"]', 'editor@satc.edu.br');
