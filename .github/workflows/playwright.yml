@@ -39,7 +39,7 @@ jobs:
           echo "TRANSFER_TOKEN_SALT=${{ vars.TRANSFER_TOKEN_SALT }}" >> .env
 
       - name: Run Strapi + Playwright
-        run: bash -c "npm run dev & npx playwright test"
+        run: bash -c "npm run dev & npx wait-on http://localhost:1337/admin && npx playwright test"
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
