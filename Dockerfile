@@ -1,31 +1,34 @@
 # Etapa 1: build da aplicação
-FROM node:18 as builder
+FROM node:20 AS builder
 
 # Define diretório de trabalho
 WORKDIR /app
 
-# Copia os arquivos para dentro do container
+# Copia arquivos de dependência
 COPY package*.json ./
+
+# Instala todas as dependências (incluindo dev)
 RUN npm install
 
+# Copia o restante dos arquivos do projeto
 COPY . .
 
-# Opcional: build se for necessário (por exemplo, TypeScript ou Strapi build)
+# Compila a aplicação (Strapi build, por exemplo)
 RUN npm run build
 
 # Etapa 2: imagem final de produção
-FROM node:18-slim
+FROM node:20-slim
 
 WORKDIR /app
 
-# Copia apenas o necessário da imagem de build
-COPY --from=builder /app /app
+# Copia arquivos da etapa de build
+COPY --from=builder /app ./
 
 # Instala apenas dependências de produção
-RUN npm install --omit=dev
+RUN npm ci --omit=dev
 
-# Expõe a porta que a aplicação usa
+# Expõe a porta da aplicação
 EXPOSE 1337
 
-# Comando para iniciar a aplicação
+# Comando para iniciar o Strapi
 CMD ["npm", "run", "start"]
