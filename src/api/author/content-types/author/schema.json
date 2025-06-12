@@ -4,7 +4,7 @@
   "info": {
     "singularName": "author",
     "pluralName": "authors",
-    "displayName": "Teste",
+    "displayName": "Autor",
     "description": "Crie autores para seu conteúdo"
   },
   "options": {
