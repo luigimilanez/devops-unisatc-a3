@@ -33,7 +33,7 @@ test('Realizando login como Editor e criando author', async ({ page }) => {
     await page.click('a:has(span:has-text("Content Manager"))');
 
     // Entrando na tag Autor
-    await page.click('a:has(div:has(span:has-text("Autor")))');
+    await page.click('a:has(div:has(span:has-text("Autor Test")))');
     // await page.click('a:has(div:has(span:has-text("Teste V2")))');
 
     // Criando um Autor
